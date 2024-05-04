@@ -21,6 +21,7 @@ type ContentText struct {
 	align         int
 	lineWidth     float64
 	pdfProtection *gopdf.PDFProtection
+	color         *gopdf.Rgb
 }
 
 func (c *ContentText) setProtection(p *gopdf.PDFProtection) {
@@ -42,6 +43,10 @@ func (c *ContentText) toSteram() (*bytes.Buffer, error) {
 	rgb.SetR(1)
 	rgb.SetG(1)
 	rgb.SetB(1)
+
+	if c.color != nil {
+		rgb = *c.color
+	}
 
 	var cc gopdf.CacheContent
 	cc.Setup(

@@ -49,6 +49,7 @@ type current struct {
 	fontStyle int
 	fontSize  int
 	lineWidth float64
+	color     *gopdf.Rgb
 }
 
 func pageHeight() float64 {
@@ -206,6 +207,7 @@ func (i *PDFt) Insert(text string, pageNum int, x float64, y float64, w float64,
 	ct.align = align
 	ct.lineWidth = i.curr.lineWidth
 	ct.setProtection(i.protection())
+	ct.color = i.curr.color
 	if _, have := i.fontDatas[ct.fontName]; !have {
 		return ErrFontNameNotFound
 	}
@@ -443,6 +445,13 @@ func (i *PDFt) SetFont(name string, style string, size int) error {
 	i.curr.fontStyle = getConvertedStyle(style)
 	i.curr.fontSize = size
 	return nil
+}
+
+func (i *PDFt) SetColor(r uint8, g uint8, b uint8) {
+	i.curr.color = &gopdf.Rgb{}
+	i.curr.color.SetR(uint8(r))
+	i.curr.color.SetG(uint8(g))
+	i.curr.color.SetB(uint8(b))
 }
 
 // Save save output pdf
