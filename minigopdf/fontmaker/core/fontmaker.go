@@ -327,7 +327,7 @@ func (f *FontMaker) MakeWidthArray(widths map[int]int) (string, error) {
 	str := "\tme.cw = make(gopdf.FontCw)\n"
 	for c := 0; c <= 255; c++ {
 		str += "\tme.cw["
-		chr := string(c)
+		chr := fmt.Sprintf("%c", c)
 		if chr == "\"" {
 			str += "gopdf.ToByte(\"\\\"\")"
 		} else if chr == "\\" {

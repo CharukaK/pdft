@@ -1,6 +1,7 @@
 package pdft
 
 import (
+	"fmt"
 	"testing"
 
 	gopdf "github.com/CharukaK/pdft/minigopdf"
@@ -43,7 +44,9 @@ func pdf(t *testing.T, filename string) {
 		return
 	}
 
-	err = ipdf.Insert("ที่ กั้น", 1, 10, 10, 100, 100, gopdf.Center|gopdf.Bottom)
+	ipdf.SetColor(0, 0, 0)
+
+	err = ipdf.Insert("HELLLLOOOOOO", 1, 10, 10, 100, 100, gopdf.Center|gopdf.Bottom)
 	if err != nil {
 		t.Error(err)
 		return
@@ -54,6 +57,7 @@ func pdf(t *testing.T, filename string) {
 		[]byte("1234"),
 		[]byte("5555"),
 	)
+	fmt.Println(filename)
 	err = ipdf.Save("test/out/" + filename)
 	if err != nil {
 		t.Error(err)
